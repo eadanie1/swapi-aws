@@ -3,7 +3,35 @@
 ## 1. Project Overview
 
 - **Project Name:** Daniel's SWAPI api v1.0.0
-- **Description:** This project is aimed at supplying endpoints for an end user to interact with the SWAPI API (Star Wars API). 
+- **Description:** This project is aimed at supplying endpoints for an end user to interact with the SWAPI API (Star Wars API). My API provides all four CRUD operation endpoints, where a user can add a character from the SWAPI database to a collection of characters, subsequently swap places between characters or remove them entirely. 
 
-## 
+## 2. Installation and Setup
 
+- **Requirements:** The required npm packages as dependencies for this repository are express v4.18.2, and axios v1.6.4. 
+
+- **Installation:** To run this api, use your preferred code editor (after having changed directory to the folder of the downloaded project), and in the terminal run: npm i express axios. This will install express and axios packages in the downloaded project folder. 
+
+## 3. Project Features
+
+- Using the 4 CRUD operations (Create, Read, Update, Delete) with the app instance of the express package, this API, in relation with Postman or similar, allows the end user to add, remove, read, and swap places of characters.
+- **app.get:** Retrieves the collection of characters, as an array of objects
+- **app.post:** Makes a post request by adding a character to the colllection, embedded into which post request is first an axios.get request to retrieve the character data directly from swapi.dev/api/people
+- **app.put:** This request takes the input of the two character IDs from the URL, finds them in the collection, and then changes their position in the array.
+- **app.delete:** The delete request requires a JSON object with a name property to be passed in the body of the request. That name is then checked in the database, and if it exists, the character is deleted. 
+
+## 4. Project Structure
+
+The project is organized into the following directories:
+/swapi-app - this is the main directory for the project, the following files are included in the main folder:
+- .gitignore
+- app.js - the main JavaScript file for the project, which is called in the terminal using nodemon to run the server and execute the HTTP requests (nodemon app.js in terminal)
+- package-lock.json
+- package.json
+- README.md - This README file
+
+/swapi-app/node_modules - contains the downloaded modules/packages for the project to run
+
+## 5. Technologies Used
+
+- **Languages:** JavaScript
+- **Frameworks/libraries:** Express.js
