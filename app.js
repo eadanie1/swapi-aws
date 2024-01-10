@@ -22,7 +22,7 @@ app.get('/api/people/:id', async (req, res) => {
     try {
         const character = collection.find(c => c.id === parseInt(req.params.id));
         if (!character) {
-            res.status(404).json({error: 'No character exists with the given ID'});
+            return res.status(404).json({error: 'No character exists with the given ID'});
         }
         res.json(character);
     }
@@ -34,8 +34,8 @@ app.get('/api/people/:id', async (req, res) => {
 app.post('/api/people/add-character', async (req, res) => {
     try {
     let character = req.body.name;
-    if (!character) {
-        return res.status(400).json({error: 'Character name is required'});
+    if (!character || !(typeof character === 'string')) {
+        return res.status(400).json({error: 'A valid string character name is required'});
     }
     
     const swapiUrl = `https://swapi.dev/api/people/?search=${character}`;
@@ -67,7 +67,7 @@ app.put('/api/people/swap/:id1/:id2', async (req, res) => {
         const index2 = collection.findIndex(c => c.id === parseInt(characterId2));
         
         if (index1 === -1 || index2 === -1) {
-            res.status(404).json({error: 'One or both of the characters were not found in the collection'});
+            return res.status(404).json({error: 'One or both of the characters were not found in the collection'});
         }
         
         [collection[index1], collection[index2]] = [collection[index2], collection[index1]];
@@ -88,10 +88,6 @@ app.put('/api/people/swap/:id1/:id2', async (req, res) => {
 app.delete('/api/people/delete-character', async (req, res) => {
     try {
         const character = collection.find(c => c.name === req.body.name);
-        
-        // if (!character) {
-        //     return res.status(400).json({error: 'The character name is required for deletion'});
-        // }
         
         const index = collection.findIndex(c => c.name === req.body.name);
 
