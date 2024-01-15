@@ -29,7 +29,7 @@ The project is organized into the following directories:
 - package.json
 - README.md - This README file
 
-/swapi-app/node_modules - contains the downloaded modules/packages for the project to run
+/swapi-app/node_modules - contains the downloaded modules/packages for the project to run - however excluded from the respository due to space and not necessary as the package.json file is included.
 
 ## 5. Technologies Used
 
