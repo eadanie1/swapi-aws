@@ -29,7 +29,7 @@ export function minifyHTML() {
   }
   
   export function compileSass() {
-    return gulp.src('src/styles/main.scss')
+    return gulp.src('src/**/*.scss')
     .pipe(plumber(errorHandler))
     .pipe(sass())
     .pipe(gulp.dest('src/css'))
