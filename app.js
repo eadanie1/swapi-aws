@@ -4,7 +4,7 @@ import axios from 'axios';
 import { routesLocal } from './src/scripts/local-characters.js';
 import { validateInput, characterNotFound, addCharacter, 
   addCharacterRoute } from './src/scripts/add-character.js';
-import {  } from './src/scripts/move-character.js';
+import { moveValidation, moveCharacters, moveRoute } from './src/scripts/move-character.js';
 import deletionHandler from './src/scripts/delete-character.js';
 const app = express();
 
@@ -23,12 +23,15 @@ routesLocal.forEach(route => {
   app.get(route.path, route.handler);
 });
 
+
 addCharacterRoute.forEach(route => {
   app.post(route.path, route.handler)
 });
 
 
-
+moveRoute.forEach(route => {
+  app.put(route.path, route.handler);
+});
 
 
 deletionHandler.deletionRoute.forEach(route => {
