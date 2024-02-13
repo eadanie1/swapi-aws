@@ -45,27 +45,5 @@ export const addCharacterRoute = [
   }}
 ];
 
-// app.post('/api/people/add-character', async (req, res) => {
-//   try {
-//     const validatedCharacterInput = await validateInput(req, res);
-    
-//     const swapiUrl = `https://swapi.dev/api/people/?search=${validatedCharacterInput}`;
-//     const swapiResponse = await axios.get(swapiUrl);
-    
-//     if (await characterNotFound(swapiResponse, res)) {
-//       res.status(404).json({error: 'The character does not exist in the SWAPI database'})
-//     }
-
-//     const characterObject = {
-//       id: collection.length + 1,
-//       name: swapiResponse.data.results[0].name
-//     };
-
-//     await addCharacter(characterObject, validatedCharacterInput, req, res);
-//   }
-//   catch (err) {
-//     console.error('Error', err.messsage);
-//   }
-// });
 
 export default { validateInput, characterNotFound, addCharacter, addCharacterRoute };
