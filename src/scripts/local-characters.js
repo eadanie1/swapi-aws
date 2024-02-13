@@ -1,11 +1,11 @@
 
 import { collection } from '../../app.js';
 
-export function getFullCollectionLocally() {
+export async function getFullCollectionLocally() {
   return collection;
 }
 
-export function getIndividualCharacterLocally(req, res) {
+export async function getIndividualCharacterLocally(req, res) {
   const character = collection.find(c => c.id === parseInt(req.params.id));
   if (!character) {
     return res.status(404).json({error: 'No character exists with the given ID'});
@@ -19,7 +19,7 @@ export const routesLocal = [
     path: '/api/people/',
     handler: async (req, res) => {
       try {
-        const fullListOfCharacters = getFullCollectionLocally();
+        const fullListOfCharacters = await getFullCollectionLocally();
         res.json(fullListOfCharacters);
       } catch (err) {
         console.error('Error reading file', err.message);
@@ -31,7 +31,7 @@ export const routesLocal = [
     path: '/api/people/:id',
     handler: async (req, res) => {
       try {
-        const singleCharacter = getIndividualCharacterLocally(req, res);
+        const singleCharacter = await getIndividualCharacterLocally(req, res);
         if (singleCharacter) {
           res.json(singleCharacter);
         }
