@@ -16,7 +16,7 @@ const paths = {
   dest: 'dist/scripts'
 };
 
-function errorHandler(error) {
+export function errorHandler(error) {
   console.error(error, error.message, error.fileName, error.lineNumber);
   this.emit('end');
 }

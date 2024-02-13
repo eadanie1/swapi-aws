@@ -1,51 +1,27 @@
 
 import express from 'express';
 import axios from 'axios';
+import { routesLocal } from './src/scripts/local-characters.js';
 const app = express();
 
 app.use(express.json());
 
-const collection = [
+
+export const collection = [
   {id: 1, 
   name: 'Princess Leia'},
   {id: 2, 
   name: 'Yoda'}
 ];
 
-function getFullCollectionLocally() {
-  return collection;
-}
 
-function getIndividualCharacterLocally(req, res) {
-  const character = collection.find(c => c.id === parseInt(req.params.id));
-  if (!character) {
-    return res.status(404).json({error: 'No character exists with the given ID'});
-  }
-  return character;
-}
-
-app.get('/api/people/', async (req, res) => {
-  try {
-    const fullListOfCharacters = getFullCollectionLocally();
-    res.json(fullListOfCharacters);
-  }
-  catch (err) {
-    console.error('Error reading file', err.message);
-    res.status(500).json({ error: 'Internal Server Error'});
-  }
+routesLocal.forEach(route => {
+  app.get(route.path, route.handler);
 });
 
-app.get('/api/people/:id', async (req, res) => {
-  try {
-    const singleCharacter = getIndividualCharacterLocally(req, res);
-    if (singleCharacter) {
-      res.json(singleCharacter);
-    }
-  }
-  catch (err) {
-    console.error('Error reading file', err.message);
-  }
-});
+
+
+
 
 async function validateInput(req, res) {
   let character = req.body.name;
@@ -55,15 +31,11 @@ async function validateInput(req, res) {
   return character;
 }
 
-async function characterNotFound(req, res) {
-  if (swapiResponse.data.count === 0) {
-    res.status(404).json({error: 'The character does not exist in the SWAPI database'})
-    return true;
-  }
-  return false;
+async function characterNotFound(swapiResponse, res) {
+  return swapiResponse.data.count === 0;
 }
 
-async function addCharacter(req, res) {
+async function addCharacter(characterObject, validatedCharacterInput, req, res) {
   collection.push(characterObject);
   res.json({message: `${validatedCharacterInput} has been added to the collection`});
 }
@@ -71,50 +43,26 @@ async function addCharacter(req, res) {
 app.post('/api/people/add-character', async (req, res) => {
   try {
     const validatedCharacterInput = await validateInput(req, res);
-
+    
     const swapiUrl = `https://swapi.dev/api/people/?search=${validatedCharacterInput}`;
     const swapiResponse = await axios.get(swapiUrl);
     
-    await characterNotFound(req, res);
-    
+    if (await characterNotFound(swapiResponse, res)) {
+      res.status(404).json({error: 'The character does not exist in the SWAPI database'})
+    }
+
     const characterObject = {
       id: collection.length + 1,
       name: swapiResponse.data.results[0].name
     };
 
-    await addCharacter(req, res);
-}
+    await addCharacter(characterObject, validatedCharacterInput, req, res);
+  }
   catch (err) {
     console.error('Error', err.messsage);
-}
+  }
 });
 
-// app.post('/api/people/add-character', async (req, res) => {
-//   try {
-//   let character = req.body.name;
-//   if (!character || !(typeof character === 'string')) {
-//     return res.status(400).json({error: 'A valid string character name is required'});
-//   }
-  
-//   const swapiUrl = `https://swapi.dev/api/people/?search=${character}`;
-//   const swapiResponse = await axios.get(swapiUrl);
-  
-//   if (swapiResponse.data.count === 0) {
-//     return res.status(404).json({error: 'The character does not exist in the SWAPI database'});
-//   }
-  
-//   const characterFull = {
-//     id: collection.length + 1,
-//     name: swapiResponse.data.results[0].name
-//   };
-
-//   collection.push(characterFull);
-//   res.json({message: `${character} has been added to the collection`});
-// }
-// catch (err) {
-//   console.error('Error', err.messsage);
-// }
-// });
 
 app.put('/api/people/swap/:id1/:id2', async (req, res) => {
   try {
@@ -161,7 +109,10 @@ app.delete('/api/people/delete-character', async (req, res) => {
   }
 });
 
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`)
 });
+
+export default {collection}
