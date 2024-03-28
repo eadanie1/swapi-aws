@@ -1,6 +1,6 @@
 
 import express from 'express';
-import axios from 'axios';
+import cors from 'cors';
 import { routesLocal } from './src/scripts/local-characters.js';
 import { validateInput, characterNotFound, addCharacter, 
   addCharacterRoute } from './src/scripts/add-character.js';
@@ -9,13 +9,17 @@ import deletionHandler from './src/scripts/delete-character.js';
 const app = express();
 
 app.use(express.json());
-
+app.use(cors());
 
 export const collection = [
   {id: 1, 
-  name: 'Princess Leia'},
+    name: 'Yoda'},
   {id: 2, 
-  name: 'Yoda'}
+  name: 'Princess Leia'},
+  {id: 3, 
+  name: 'Obi-Wan Kenobi'},
+  {id: 4, 
+  name: 'R2-D2'},
 ];
 
 
