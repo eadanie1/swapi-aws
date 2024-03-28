@@ -16,7 +16,8 @@ export async function characterNotFound(swapiResponse, res) {
 
 export async function addCharacter(characterObject, validatedCharacterInput, req, res) {
   collection.push(characterObject);
-  res.json({message: `${validatedCharacterInput} has been added to the collection`});
+  // res.json({message: `${validatedCharacterInput} has been added to the collection`});
+  res.json(characterObject);
 }
 
 export const addCharacterRoute = [

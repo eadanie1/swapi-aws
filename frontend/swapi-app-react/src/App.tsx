@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CharacterForm from "./components/CharacterForm";
+import SwapCharacters from "./components/SwapCharacters";
 import CharacterList from "./components/CharacterList";
 import axios, { CanceledError } from "axios";
 
@@ -31,10 +32,23 @@ function App() {
     // return () => controller.abort();
   }, []);
 
+  // useEffect(() => {
+  //   axios
+  //     .post("http://localhost:3000/api/people/add-character", { name: ${} })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setCharacters([...characters, res.data]);
+  //     })
+  //     .catch((err) => {
+  //       setError(err.message);
+  //     });
+  // }, []);
+
   return (
     <>
       <h1>STAR WARS API</h1>
       <CharacterForm />
+      {/* <SwapCharacters /> or try place as btn each char */}
       <CharacterList characters={characters} />
     </>
   );

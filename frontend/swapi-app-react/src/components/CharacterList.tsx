@@ -27,7 +27,7 @@ const CharacterList = ({ characters }: CLProps) => {
                 className={`card-body d-flex flex-column justify-content-between`}
               >
                 <h5 className="card-title">{c.name}</h5>
-                <button className={`${styles.buttonCustom} btn`}>Edit</button>
+                <button className={`${styles.buttonCustom} btn`}>Swap</button>
               </div>
             </div>
           </div>

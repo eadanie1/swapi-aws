@@ -1,3 +1,8 @@
 .customInput::placeholder {
   color: yellow !important;
 }
+
+.buttonCustom {
+  background-color: rgb(53, 53, 53)!important;
+  color: yellow!important;
+}
