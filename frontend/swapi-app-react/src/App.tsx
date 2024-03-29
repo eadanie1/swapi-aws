@@ -16,7 +16,8 @@ function App() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData | null>(null);
-  const [swap, setSwap] = useState([]);
+  const [swapCharacter, setSwap] = useState([]);
+  const [removeCharacter, setRemove] = useState(null);
   const controller = new AbortController();
 
   useEffect(() => {
@@ -54,9 +55,11 @@ function App() {
   }, [formData]);
 
   useEffect(() => {
-    if (swap.length > 1) {
+    if (swapCharacter.length > 1) {
       axios
-        .put(`http://localhost:3000/api/people/swap/${swap[0]}/${swap[1]}`)
+        .put(
+          `http://localhost:3000/api/people/swap/${swapCharacter[0]}/${swapCharacter[1]}`
+        )
         .then((res) => {
           setCharacters([...res.data]);
         })
@@ -65,38 +68,34 @@ function App() {
         });
       setSwap([]);
     }
-  }, [swap]);
+  }, [swapCharacter]);
 
-  // useEffect(() => {
-  //   if (swap.length > 1) {
-  //     axios
-  //       .delete(`http://localhost:3000/api/people/swap/${swap[0]}/${swap[1]}`)
-  //       .then((res) => {
-  //         setCharacters([...res.data]);
-  //       })
-  //       .catch((err) => {
-  //         setError(err.message);
-  //       });
-  //     setSwap([]);
-  //   }
-  // }, [swap]);
-
-  // /api/people/delete-character
+  useEffect(() => {
+    if (removeCharacter) {
+      axios
+        .delete(
+          `http://localhost:3000/api/people/delete-character/${removeCharacter}`
+        )
+        .then((res) => {
+          setCharacters(characters.filter((c) => c.id !== removeCharacter));
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
+    }
+  }, [removeCharacter]);
 
   const handleFormSubmit = (data: FormData) => {
     setFormData(data);
   };
 
   const handleSwapClick = (id: number) => {
-    console.log(id);
     setSwap((prevArray) => [...prevArray, id]);
-    console.log(swap);
   };
 
-  // const handleDeleteClick = (id: number) => {
-  //   console.log(id);
-  //   setCharacters(characters.filter(c => ));
-  // };
+  const handleDeleteClick = (id: number) => {
+    setRemove(id);
+  };
 
   return (
     <>
@@ -107,7 +106,7 @@ function App() {
       <CharacterList
         characters={characters}
         onSwapClick={handleSwapClick}
-        // onDeleteClick={handleDeleteClick}
+        onDeleteClick={handleDeleteClick}
       />
       <footer className="mt-3">
         <small

@@ -34,7 +34,11 @@ const CharacterForm = ({ onSubmit }: CFProps) => {
           id="name"
           type="text"
           className={`form-control ${styles.customInput}`}
-          style={{ backgroundColor: "rgb(53,53,53)", color: "yellow" }}
+          style={{
+            backgroundColor: "rgb(53,53,53)",
+            color: "yellow",
+            maxWidth: "400px",
+          }}
           placeholder="Type name of character"
         />
         {errors.name && (

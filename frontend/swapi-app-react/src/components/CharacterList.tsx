@@ -19,7 +19,7 @@ const CharacterList = ({ characters, onSwapClick, onDeleteClick }: CLProps) => {
   };
 
   const handleDelete = (id: number) => {
-    onSwapClick(id);
+    onDeleteClick(id);
   };
 
   return (
