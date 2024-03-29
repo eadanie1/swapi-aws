@@ -14,7 +14,8 @@ export async function moveValidation(collection, req, res) {
 
 export async function moveCharacters(collection, validatedMove, req, res) {
   [collection[validatedMove.index1], collection[validatedMove.index2]] = [collection[validatedMove.index2], collection[validatedMove.index1]];
-  res.json({message: `${collection[1].name} and ${collection[0].name} have been successfully swapped`});
+  // res.json({message: `${collection[1].name} and ${collection[0].name} have been successfully swapped`});
+  res.json(collection);
 }
 
 
