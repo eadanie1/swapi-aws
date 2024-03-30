@@ -1,4 +1,4 @@
-# SWAPI API project
+# Star Wars API project
 
 ## 1. Project Overview
 
