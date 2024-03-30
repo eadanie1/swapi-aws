@@ -4,5 +4,6 @@
 
 .buttonCustom {
   background-color: rgb(53, 53, 53)!important;
-  color: rgb(255, 255, 0)!important;
+  color: yellow !important;
+    margin-right: 12px;
 }

@@ -6,9 +6,9 @@ export async function validateDeletion(collection, req, res) {
   
   if (index !== -1) {
     collection.splice(index, 1);
-    res.json(collection);
+    return res.json(collection);
   } else {
-    res.status(404).json({error: 'Character not found in the collection'});
+    return res.status(404).json({error: 'Character not found in the collection'});
   } 
 }
 

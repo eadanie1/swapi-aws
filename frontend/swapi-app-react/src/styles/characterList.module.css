@@ -4,7 +4,12 @@
   color: yellow !important;
 }
 
-.buttonCustom {
+.buttonCustomSwap {
   background-color: rgb(53, 53, 53)!important;
-  color: yellow!important;
+  color: lightgray !important;
+}
+
+.buttonCustomDelete {
+  background-color: rgb(53, 53, 53)!important;
+  color: rgb(255, 0, 0) !important;
 }

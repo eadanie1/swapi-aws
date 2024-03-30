@@ -20,10 +20,10 @@ export const routesLocal = [
     handler: async (req, res) => {
       try {
         const fullListOfCharacters = await getFullCollectionLocally();
-        res.json(fullListOfCharacters);
+        return res.json(fullListOfCharacters);
       } catch (err) {
         console.error('Error reading file', err.message);
-        res.status(500).json({ error: 'Internal Server Error'});
+        return res.status(500).json({ error: 'Internal Server Error'});
       }
     }
   },
@@ -33,10 +33,11 @@ export const routesLocal = [
       try {
         const singleCharacter = await getIndividualCharacterLocally(req, res);
         if (singleCharacter) {
-          res.json(singleCharacter);
+          return res.json(singleCharacter);
         }
       } catch (err) {
         console.error('Error reading file', err.message);
+        return;
       }
     }
   }

@@ -23,7 +23,7 @@ const CharacterList = ({ characters, onSwapClick, onDeleteClick }: CLProps) => {
   };
 
   return (
-    <div className="container">
+    <div className="container mt-3">
       <div className="row">
         {characters.map((c) => (
           <div
@@ -45,14 +45,14 @@ const CharacterList = ({ characters, onSwapClick, onDeleteClick }: CLProps) => {
                   <button
                     onClick={() => handleSwap(c.id)}
                     key={`swap-${c.id}`}
-                    className={`${styles.buttonCustom} btn`}
+                    className={`${styles.buttonCustomSwap} btn`}
                   >
                     Swap
                   </button>
                   <button
                     onClick={() => handleDelete(c.id)}
                     key={`delete-${c.id}`}
-                    className={`${styles.buttonCustom} btn`}
+                    className={`${styles.buttonCustomDelete} btn`}
                   >
                     Delete
                   </button>

@@ -17,7 +17,7 @@ export async function characterNotFound(swapiResponse, res) {
 export async function addCharacter(characterObject, validatedCharacterInput, req, res) {
   collection.push(characterObject);
   // res.json({message: `${validatedCharacterInput} has been added to the collection`});
-  res.json(characterObject);
+  return res.json(characterObject);
 }
 
 export const addCharacterRoute = [
@@ -30,11 +30,17 @@ export const addCharacterRoute = [
       const swapiResponse = await axios.get(swapiUrl);
       
       if (await characterNotFound(swapiResponse, res)) {
-        res.status(404).json({error: 'The character does not exist in the SWAPI database'})
+        return res.status(404).json({error: 'The character does not exist in the SWAPI database'})
       }
-  
+
+      let nextId = 1;
+
+      while (collection.some(character => character.id === nextId)) {
+        nextId++;
+      }
+      
       const characterObject = {
-        id: collection.length + 1,
+        id: nextId,
         name: swapiResponse.data.results[0].name
       };
   
@@ -42,6 +48,7 @@ export const addCharacterRoute = [
     }
     catch (err) {
       console.error('Error', err.messsage);
+      return;
     }
   }}
 ];

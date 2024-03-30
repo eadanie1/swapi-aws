@@ -13,26 +13,32 @@ interface FormData {
 }
 
 function App() {
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const controller = new AbortController();
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [swapCharacter, setSwap] = useState([]);
   const [removeCharacter, setRemove] = useState(null);
-  const controller = new AbortController();
 
   useEffect(() => {
+    setLoading(true);
+
     axios
       .get("http://localhost:3000/api/people", { signal: controller.signal })
       .then((res) => {
         setCharacters(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         if (err instanceof CanceledError) {
           console.error("Error", err);
+          setLoading(false);
           return;
         } else {
           console.error("Error", err);
           setError(err.message);
+          setLoading(false);
         }
       });
     // return () => controller.abort();
@@ -40,6 +46,8 @@ function App() {
 
   useEffect(() => {
     if (formData) {
+      setLoading(true);
+
       axios
         .post("http://localhost:3000/api/people/add-character", {
           name: formData.name,
@@ -47,24 +55,30 @@ function App() {
         .then((res) => {
           console.log(res);
           setCharacters((prevCharacters) => [...prevCharacters, res.data]);
+          setLoading(false);
         })
         .catch((err) => {
           setError(err.message);
+          setLoading(false);
         });
     }
   }, [formData]);
 
   useEffect(() => {
     if (swapCharacter.length > 1) {
+      setLoading(true);
+
       axios
         .put(
           `http://localhost:3000/api/people/swap/${swapCharacter[0]}/${swapCharacter[1]}`
         )
         .then((res) => {
           setCharacters([...res.data]);
+          setLoading(false);
         })
         .catch((err) => {
           setError(err.message);
+          setLoading(false);
         });
       setSwap([]);
     }
@@ -72,15 +86,19 @@ function App() {
 
   useEffect(() => {
     if (removeCharacter) {
+      setLoading(true);
+
       axios
         .delete(
           `http://localhost:3000/api/people/delete-character/${removeCharacter}`
         )
         .then((res) => {
           setCharacters(characters.filter((c) => c.id !== removeCharacter));
+          setLoading(false);
         })
         .catch((err) => {
           setError(err.message);
+          setLoading(false);
         });
     }
   }, [removeCharacter]);
@@ -99,10 +117,13 @@ function App() {
 
   return (
     <>
-      <div className="d-flex justify-content-center">
-        <img src="src/images/Star_Wars_Logo.svg" />
-      </div>
-      <CharacterForm onSubmit={handleFormSubmit} />
+      <header className="d-flex justify-content-center">
+        <img
+          style={{ width: "25%", height: "25%" }}
+          src="src/images/Star_Wars_Logo.svg"
+        />
+      </header>
+      <CharacterForm onSubmit={handleFormSubmit} isLoading={isLoading} />
       <CharacterList
         characters={characters}
         onSwapClick={handleSwapClick}
