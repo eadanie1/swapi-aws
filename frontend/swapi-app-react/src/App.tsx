@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import CharacterForm from "./components/CharacterForm";
 import CharacterList from "./components/CharacterList";
-import axios, { CanceledError } from "axios";
+import PixiComponent from "./components/PixiComponent";
+import apiClient, { CanceledError } from "./services/api-client";
 
 interface Character {
   id: number;
@@ -17,14 +18,15 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setLoading] = useState(false);
   const controller = new AbortController();
+  const cancel = () => controller.abort();
   const [characters, setCharacters] = useState<Character[]>([]);
-  const [swapCharacter, setSwap] = useState([]);
-  const [removeCharacter, setRemove] = useState(null);
+  const [swapCharacter, setSwap] = useState<number[]>([]);
+  const [removeCharacter, setRemove] = useState<number | null>(null);
 
   useEffect(() => {
     setLoading(true);
 
-    axios
+    apiClient
       .get("http://localhost:3000/api/people", { signal: controller.signal })
       .then((res) => {
         setCharacters(res.data);
@@ -35,12 +37,16 @@ function App() {
           console.error("Error", err);
           setLoading(false);
           return;
-        } else {
+        } else if (error) {
           console.error("Error", err);
           setError(err.message);
           setLoading(false);
+        } else {
+          console.error("Error", err);
+          setLoading(false);
         }
       });
+    // return () => cancel();
     // return () => controller.abort();
   }, []);
 
@@ -48,7 +54,7 @@ function App() {
     if (formData) {
       setLoading(true);
 
-      axios
+      apiClient
         .post("http://localhost:3000/api/people/add-character", {
           name: formData.name,
         })
@@ -66,19 +72,15 @@ function App() {
 
   useEffect(() => {
     if (swapCharacter.length > 1) {
-      setLoading(true);
-
-      axios
+      apiClient
         .put(
           `http://localhost:3000/api/people/swap/${swapCharacter[0]}/${swapCharacter[1]}`
         )
         .then((res) => {
           setCharacters([...res.data]);
-          setLoading(false);
         })
         .catch((err) => {
           setError(err.message);
-          setLoading(false);
         });
       setSwap([]);
     }
@@ -88,12 +90,14 @@ function App() {
     if (removeCharacter) {
       setLoading(true);
 
-      axios
+      apiClient
         .delete(
           `http://localhost:3000/api/people/delete-character/${removeCharacter}`
         )
-        .then((res) => {
-          setCharacters(characters.filter((c) => c.id !== removeCharacter));
+        .then((_) => {
+          setCharacters((prevCharacters) =>
+            prevCharacters.filter((c) => c.id !== removeCharacter)
+          );
           setLoading(false);
         })
         .catch((err) => {
@@ -117,6 +121,7 @@ function App() {
 
   return (
     <>
+      {/* <PixiComponent /> */}
       <header className="d-flex justify-content-center">
         <img
           style={{ width: "25%", height: "25%" }}

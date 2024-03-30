@@ -27,7 +27,7 @@ const CharacterForm = ({ onSubmit, isLoading }: CFProps) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ resolver: adjustedZodResolver });
 
   const onSubmitHandler = (data: FormData) => {
