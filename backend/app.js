@@ -2,9 +2,8 @@
 import express from 'express';
 import cors from 'cors';
 import { routesLocal } from './src/scripts/local-characters.js';
-import { validateInput, characterNotFound, addCharacter, 
-  addCharacterRoute } from './src/scripts/add-character.js';
-import { moveValidation, moveCharacters, moveRoute } from './src/scripts/move-character.js';
+import { addCharacterRoute } from './src/scripts/add-character.js';
+import { moveRoute } from './src/scripts/move-character.js';
 import deletionHandler from './src/scripts/delete-character.js';
 const app = express();
 
@@ -34,7 +33,7 @@ addCharacterRoute.forEach(route => {
 
 
 moveRoute.forEach(route => {
-  app.put(route.path, route.handler);
+  app.patch(route.path, route.handler);
 });
 
 
