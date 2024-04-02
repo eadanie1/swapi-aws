@@ -38,20 +38,20 @@ The project is split up into two subdirectories: backend and frontend. Please se
 
 The project is organized into the following directories:
 swapi-app - the main root directory
-./backend
+-./backend
 
 - ./src - all source code for the backend
-  ...
-  ./frontend
+- ...
+- ./frontend
 - ./swapi-app-react - main Vite folder for the React/frontend portion
 - index.html - main html file that the React components link into
 - ./src - all source code for the React portion
 - .gitignore
 - README.md - This README file
-  ...
+- ...
 
-backend and frontend:
-./node_modules - contains the downloaded modules/packages for the project to run - however excluded from the respository due to space and not necessary as the package.json file is included.
+- backend and frontend:
+  ./node_modules - contains the downloaded modules/packages for the project to run - however excluded from the respository due to space and not necessary as the package.json file is included.
 
 ## 5. Technologies Used
 
