@@ -9,3 +9,10 @@
   background-size: cover;
   background-position: center;
 }
+
+.errorMessage {
+  background-color: black;
+  padding: 8px;
+  border-radius: 8px;
+  font-style: italic;
+}

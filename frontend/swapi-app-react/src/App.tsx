@@ -57,12 +57,12 @@ function App() {
           name: formData.name,
         })
         .then((res) => {
-          console.log(res);
           setCharacters((prevCharacters) => [...prevCharacters, res.data]);
           setLoading(false);
           setError(null);
         })
         .catch((err) => {
+          console.log(err);
           setError(err.message);
           setLoading(false);
         });
@@ -122,24 +122,16 @@ function App() {
       <header className="d-flex justify-content-center">
         <img
           style={{ width: "25%", height: "25%" }}
-          src="src/images/Star_Wars_Logo.svg"
+          src="src/images/Star_Wars_Logo transparent.svg"
           alt="Star Wars Logo"
         />
       </header>
       <CharacterForm onSubmit={handleFormSubmit} isLoading={isLoading} />
       {error && (
-        <p
-          className="text-danger"
-          style={{
-            backgroundColor: "black",
-            padding: "8px",
-            borderRadius: "8px",
-            fontStyle: "italic",
-          }}
-        >
-          {error.includes("POST")
-            ? "The character does not exist in the SWAPI database."
-            : "An unexpected error occurred."}
+        <p className={`text-danger ${styles.errorMessage}`}>
+          {error.includes("404")
+            ? "The character does not exist in the SWAPI database"
+            : "An unexpected error occurred"}
         </p>
       )}
       <CharacterList

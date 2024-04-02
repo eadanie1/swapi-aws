@@ -63,12 +63,9 @@ const CharacterForm = ({ onSubmit, isLoading }: CFProps) => {
               placeholder="Type name of character"
             />
             {errors.name && (
-              <p
-                className="text-danger"
-                style={{ margin: "0 0 0 8px", fontStyle: "italic" }}
-              >
+              <div className={`text-danger ${styles.errorMessage}`}>
                 {errors.name.message}
-              </p>
+              </div>
             )}
           </div>
         </div>
