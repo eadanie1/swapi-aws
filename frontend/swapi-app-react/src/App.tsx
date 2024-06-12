@@ -123,7 +123,7 @@ function App() {
       <header className="d-flex justify-content-center">
         <img
           style={{ width: "25%", height: "25%" }}
-          src="src/images/Star_Wars_Logo transparent.svg"
+          src="/images/Star_Wars_Logo transparent.svg"
           alt="Star Wars Logo"
         />
       </header>
