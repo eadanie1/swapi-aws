@@ -1,6 +1,6 @@
 import apiClient from "./api-client";
 
-export class HttpService<T> {
+export class HttpService {
   getAll<T>(endpoint: string) {
     const controller = new AbortController();
     const request = apiClient.get<T[]>(endpoint, { signal: controller.signal });

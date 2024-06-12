@@ -5,6 +5,6 @@ export interface Character {
   name: string;
 }
 
-const characterService = createHttpService() as HttpService<Character>;
+const characterService = createHttpService() as HttpService;
 
 export default characterService;

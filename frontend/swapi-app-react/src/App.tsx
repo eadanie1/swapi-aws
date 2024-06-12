@@ -4,6 +4,7 @@ import CharacterList from "./components/CharacterList";
 import { CanceledError } from "./services/api-client";
 import characterService, { Character } from "./services/characterService";
 import styles from "../src/styles/app.module.css";
+import { AxiosError, AxiosResponse } from "axios";
 
 interface FormData {
   name: string;
@@ -22,7 +23,7 @@ function App() {
 
     const { request, cancel } = characterService.getAll("/");
     request
-      .then((res) => {
+      .then((res: AxiosResponse) => {
         if (Array.isArray(res.data)) {
           setCharacters(res.data as Character[]);
           setError(null);
@@ -31,7 +32,7 @@ function App() {
         }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         if (err instanceof CanceledError) {
           console.error("Error", err);
           setLoading(false);
@@ -56,12 +57,12 @@ function App() {
         .create("/add-character", {
           name: formData.name,
         })
-        .then((res) => {
+        .then((res: AxiosResponse) => {
           setCharacters((prevCharacters) => [...prevCharacters, res.data]);
           setLoading(false);
           setError(null);
         })
-        .catch((err) => {
+        .catch((err: AxiosError) => {
           console.log(err);
           setError(err.message);
           setLoading(false);
@@ -73,11 +74,11 @@ function App() {
     if (swapCharacter.length > 1) {
       characterService
         .update(`/swap/${swapCharacter[0]}/${swapCharacter[1]}`)
-        .then((res) => {
+        .then((res: AxiosResponse) => {
           setCharacters([...res.data]);
           setError(null);
         })
-        .catch((err) => {
+        .catch((err: AxiosError) => {
           setError(err.message);
         });
       setSwap([]);
@@ -90,14 +91,14 @@ function App() {
 
       characterService
         .delete(`/delete-character/${removeCharacter}`)
-        .then((_) => {
+        .then((_: AxiosResponse) => {
           setCharacters((prevCharacters) =>
             prevCharacters.filter((c) => c.id !== removeCharacter)
           );
           setLoading(false);
           setError(null);
         })
-        .catch((err) => {
+        .catch((err: AxiosError) => {
           setError(err.message);
           setLoading(false);
         });
