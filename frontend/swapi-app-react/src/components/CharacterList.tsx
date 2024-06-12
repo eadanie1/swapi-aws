@@ -33,7 +33,8 @@ const CharacterList = ({ characters, onSwapClick, onDeleteClick }: CLProps) => {
           >
             <div className={`${styles.cardCustom} col card h-100`}>
               <img
-                src={`/src/images/${c.name}.jpg`}
+                // src={`/src/images/${c.name}.jpg`}
+                src={`/images/${c.name}.jpg`}
                 className="card-img-top"
                 alt={`Star Wars character ${c.name}`}
               />
