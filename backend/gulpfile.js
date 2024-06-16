@@ -1,7 +1,8 @@
 
 import gulp from 'gulp';
 import htmlmin from 'gulp-htmlmin';
-import sassPackage from 'sass';
+// import sassPackage from 'sass';
+import * as sassPackage from 'sass';
 import gulpSass from 'gulp-sass';
 import cleanCSS from 'gulp-clean-css';
 import uglify from 'gulp-terser';
@@ -65,8 +66,10 @@ export function watch() {
   gulp.watch('src/*.html', minifyHTML);
   gulp.watch('src/styles/*.scss', compileSass);
   gulp.watch('src/styles/*.css', minifyCSS);
-  gulp.watch('src/scripts/*js', minifyJS);
-  gulp.watch('src/images/*', optimizeImages);
+  gulp.watch('src/*js', minifyJS);
+  gulp.watch('/images/*', optimizeImages);
 }
 
-export default gulp.series(minifyHTML, compileSass, minifyCSS, minifyJS, optimizeImages, watch);
+export const build =  gulp.series(minifyHTML, compileSass, minifyCSS, minifyJS, optimizeImages, watch);
+
+export default gulp.series(build, watch);
