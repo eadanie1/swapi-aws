@@ -16,10 +16,10 @@ export async function validateInput(req, res) {
     return res.status(401).json({message: 'The character already exists in the collection'});
   }
 
-  let substringMatch = collection.some(c => c.name.toLowerCase().includes(characterLowerCase));
-  if (substringMatch) {
-    return res.status(401).json({message: 'The character already exists in the collection'});
-  }
+  // let substringMatch = collection.some(c => c.name.toLowerCase().includes(characterLowerCase));
+  // if (substringMatch) {
+  //   return res.status(401).json({message: 'The character already exists in the collection'});
+  // }
 
   return character;
 }
