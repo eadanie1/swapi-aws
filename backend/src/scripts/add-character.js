@@ -12,7 +12,7 @@ export async function validateInput(req, res) {
   let characterAlreadyInCollection = collection.some(c => c.name.toLowerCase().includes(character.toLowerCase()));
 
   if (characterAlreadyInCollection) {
-    return res.status(400).json({message: 'The character already exists in the collection'});
+    return res.status(401).json({message: 'The character already exists in the collection'});
   }
 
   return character;
