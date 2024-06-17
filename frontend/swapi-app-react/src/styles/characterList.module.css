@@ -31,12 +31,12 @@
 }
 
 @media (max-width: 500px) {
-  .cardCustom {
+  /* .cardCustom {
     margin-left: auto;
     margin-right: auto;
     float: none;
     padding: 10px;
     text-align: center;
     border-width: 1px;
-  }
+  } */
 }
