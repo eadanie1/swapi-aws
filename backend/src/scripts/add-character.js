@@ -3,15 +3,21 @@ import axios from 'axios';
 import { collection } from '../../app.js';
 
 export async function validateInput(req, res) {
-  let character = req.body.name;
+  let character = req.body.name.trim();;
 
   if (!character || !(typeof character === 'string')) {
     return res.status(400).json({error: 'A valid string character name is required'});
   }
   
-  let characterAlreadyInCollection = collection.some(c => c.name.toLowerCase().includes(character.toLowerCase()));
+  const characterLowerCase = character.toLowerCase();
 
-  if (characterAlreadyInCollection) {
+  let exactMatch = collection.find(c => c.name.toLowerCase() === characterLowerCase);
+  if (exactMatch) {
+    return res.status(401).json({message: 'The character already exists in the collection'});
+  }
+
+  let substringMatch = collection.some(c => c.name.toLowerCase().includes(characterLowerCase));
+  if (substringMatch) {
     return res.status(401).json({message: 'The character already exists in the collection'});
   }
 
