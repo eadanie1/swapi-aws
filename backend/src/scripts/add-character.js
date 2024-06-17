@@ -9,7 +9,7 @@ export async function validateInput(req, res) {
     return res.status(400).json({error: 'A valid string character name is required'});
   }
   
-  let characterAlreadyInCollection = collection.find(c => c.name.toLowerCase() === character.toLowerCase());
+  let characterAlreadyInCollection = collection.some(c => c.name.toLowerCase().includes(character.toLowerCase()));
 
   if (characterAlreadyInCollection) {
     return res.status(400).json({message: 'The character already exists in the collection'});
