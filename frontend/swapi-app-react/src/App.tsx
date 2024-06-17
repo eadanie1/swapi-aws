@@ -132,7 +132,7 @@ function App() {
         <p className={`text-danger ${styles.errorMessage}`}>
           {error.includes("404")
             ? "The character does not exist in the SWAPI database"
-            : error.includes("400")
+            : error.includes("401")
             ? "The character already exists in the collection"
             : "An unexpected error occurred"}
         </p>
