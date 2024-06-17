@@ -4,13 +4,13 @@ import { collection } from '../../app.js';
 
 export async function validateInput(req, res) {
   let character = req.body.name;
-  console.log(character);
+
   if (!character || !(typeof character === 'string')) {
     return res.status(400).json({error: 'A valid string character name is required'});
   }
   
-  let characterAlreadyInCollection = collection.find(c => c.name === character);
-  console.log(characterAlreadyInCollection);
+  let characterAlreadyInCollection = collection.find(c => c.name.toLowerCase() === character.toLowerCase());
+
   if (characterAlreadyInCollection) {
     return res.status(400).json({message: 'The character already exists in the collection'});
   }
@@ -24,7 +24,6 @@ export async function characterNotFound(swapiResponse, res) {
 
 export async function addCharacter(characterObject, validatedCharacterInput, req, res) {
   collection.push(characterObject);
-  // res.json({message: `${validatedCharacterInput} has been added to the collection`});
   return res.json(characterObject);
 }
 
