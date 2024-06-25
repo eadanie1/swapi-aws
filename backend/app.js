@@ -1,24 +1,25 @@
 
 import express from 'express';
 import cors from 'cors';
+import awsServerlessExpress from 'aws-serverless-express';
 import { routesLocal } from './src/scripts/local-characters.js';
 import { addCharacterRoute } from './src/scripts/add-character.js';
 import { moveRoute } from './src/scripts/move-character.js';
 import deletionHandler from './src/scripts/delete-character.js';
+
 const app = express();
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json(), cors());
 
 export const collection = [
   {id: 1, 
     name: 'Yoda'},
   {id: 2, 
-  name: 'Princess Leia'},
+    name: 'Princess Leia'},
   {id: 3, 
-  name: 'Obi-Wan Kenobi'},
+    name: 'Obi-Wan Kenobi'},
   {id: 4, 
-  name: 'R2-D2'},
+    name: 'R2-D2'},
 ];
 
 
@@ -42,9 +43,15 @@ deletionHandler.deletionRoute.forEach(route => {
 });
 
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Listening on port ${port}...`)
-});
+// const port = process.env.PORT || 3000;
+// app.listen(port, () => {
+//   console.log(`Listening on port ${port}...`)
+// });
 
-export default {collection}
+const server = awsServerlessExpress.createServer(app);
+
+export const handler = (event, context) => {
+  awsServerlessExpress.proxy(server, event, context);
+};
+
+export default { collection }; 

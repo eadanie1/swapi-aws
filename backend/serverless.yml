@@ -1,0 +1,32 @@
+service: express-app
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: arn:aws:s3:::swapi-aws-bucket/*
+
+functions:
+  app:
+    handler: app.handler
+    events:
+      - http:
+          path: /api/people
+          method: get
+      - http:
+          path: /api/people/{id}
+          method: get
+      - http:
+          path: /api/people/add-character
+          method: post
+      - http:
+          path: /api/people/swap/{id1}/{id2}
+          method: patch
+      - http:
+          path: /api/people/delete-character/{id}
+          method: delete

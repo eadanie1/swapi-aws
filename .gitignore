@@ -2,3 +2,4 @@ backend/dist/
 backend/node_modules/
 frontend/swapi-app-react/node_modules/
 public/
+*.txt
