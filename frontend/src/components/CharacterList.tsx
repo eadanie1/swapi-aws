@@ -49,13 +49,13 @@ const CharacterList = ({ characters, onSwapClick, onDeleteClick }: CLProps) => {
                   >
                     Swap
                   </button>
-                  <button
+                  {/* <button
                     onClick={() => handleDelete(c.id)}
                     key={`delete-${c.id}`}
                     className={`${styles.buttonCustomDelete} btn`}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
