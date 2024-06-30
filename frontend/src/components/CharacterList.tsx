@@ -11,16 +11,16 @@ interface CLProps {
   onDeleteClick: (id: number) => void;
 }
 
-const CharacterList = ({ characters, onSwapClick }: CLProps) => {
+const CharacterList = ({ characters, onSwapClick, onDeleteClick }: CLProps) => {
   console.log(characters);
 
   const handleSwap = (id: number) => {
     onSwapClick(id);
   };
 
-  // const handleDelete = (id: number) => {
-  //   onDeleteClick(id);
-  // };
+  const handleDelete = (id: number) => {
+    onDeleteClick(id);
+  };
 
   return (
     <div className="container mt-3">
@@ -49,13 +49,13 @@ const CharacterList = ({ characters, onSwapClick }: CLProps) => {
                   >
                     Swap
                   </button>
-                  {/* <button
+                  <button
                     onClick={() => handleDelete(c.id)}
                     key={`delete-${c.id}`}
                     className={`${styles.buttonCustomDelete} btn`}
                   >
                     Delete
-                  </button> */}
+                  </button>
                 </div>
               </div>
             </div>
