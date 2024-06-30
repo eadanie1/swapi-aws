@@ -11,16 +11,16 @@ interface CLProps {
   onDeleteClick: (id: number) => void;
 }
 
-const CharacterList = ({ characters, onSwapClick, onDeleteClick }: CLProps) => {
+const CharacterList = ({ characters, onSwapClick }: CLProps) => {
   console.log(characters);
 
   const handleSwap = (id: number) => {
     onSwapClick(id);
   };
 
-  const handleDelete = (id: number) => {
-    onDeleteClick(id);
-  };
+  // const handleDelete = (id: number) => {
+  //   onDeleteClick(id);
+  // };
 
   return (
     <div className="container mt-3">
